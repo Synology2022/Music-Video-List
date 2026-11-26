@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Database musicale Mancini Alessandro</title>
+<title>Database musicale</title>
 <style>
 :root{--blue:#12a7de;--fg:#f2f2f2;--dim:rgba(255,255,255,.62);--u:calc(100vh/1080)}
 *{box-sizing:border-box}
@@ -115,6 +115,49 @@ html,body{margin:0;height:100%;background:#000;color:var(--fg);font-family:"Sego
 .grid .gsec{color:var(--blue);text-transform:uppercase;font-size:.8em;letter-spacing:.05em;padding-top:calc(14*var(--u));border-top:1px solid rgba(255,255,255,.12);margin-top:calc(6*var(--u))}
 .grid a{color:var(--blue)}
 #dclose{position:absolute;right:calc(30*var(--u));top:calc(18*var(--u));font-size:calc(34*var(--u));cursor:pointer;color:var(--dim);z-index:2}
+/* phone / portrait layout: a scrolling grid instead of the TV carousel */
+html.m{--u:calc(min(100vw,100vh)/500)}
+html.m,html.m body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto;user-select:auto}
+html.m #head,html.m #tabs,html.m #tools,html.m #row,html.m #foot,html.m #empty{position:static;transform:none;left:auto;right:auto;top:auto;bottom:auto}
+html.m #head{padding:calc(18*var(--u)) calc(16*var(--u)) calc(10*var(--u));gap:calc(14*var(--u));position:relative;z-index:2}
+html.m #head svg{width:calc(40*var(--u));height:calc(40*var(--u));flex:none}
+html.m #secname{font-size:calc(26*var(--u))}
+html.m #subline{font-size:calc(14*var(--u));text-transform:none}
+html.m #tabs{display:flex;flex-wrap:wrap;gap:calc(8*var(--u));padding:0 calc(16*var(--u)) calc(10*var(--u));font-size:calc(15*var(--u));position:relative;z-index:2}
+html.m #tools{display:flex;flex-wrap:wrap;gap:calc(8*var(--u));padding:0 calc(16*var(--u)) calc(14*var(--u));font-size:calc(15*var(--u));position:relative;z-index:2}
+html.m #search{flex:1 1 100%;width:auto;font-size:max(16px,calc(16*var(--u)));padding:calc(10*var(--u)) calc(12*var(--u))}
+html.m .tbtn{padding:calc(8*var(--u)) calc(14*var(--u))}
+html.m #row{height:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(calc(140*var(--u)),1fr));gap:calc(16*var(--u)) calc(12*var(--u));padding:0 calc(16*var(--u)) calc(24*var(--u));position:relative;z-index:1}
+html.m .mcell{cursor:pointer;min-width:0}
+html.m .mcell .card{position:relative;width:100%;height:auto;transition:none}
+html.m .mcell .ph{font-size:calc(14*var(--u))}
+html.m .mcell .badge i{font-size:calc(11*var(--u))}
+html.m .cap{margin-top:calc(6*var(--u));font-size:calc(13*var(--u));line-height:1.3;color:var(--fg);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+html.m .cap b{display:block;font-weight:600;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html.m #info,html.m #flags,html.m #hint{display:none}
+html.m #empty{position:relative;z-index:1;padding:calc(40*var(--u)) 0;font-size:calc(18*var(--u))}
+html.m #foot{text-align:center;padding:calc(10*var(--u)) 0 calc(24*var(--u));font-size:calc(13*var(--u));position:relative;z-index:1}
+html.m #filters,html.m #sortp{left:calc(12*var(--u));right:calc(12*var(--u));top:calc(12*var(--u));max-height:80vh;overflow:auto;font-size:calc(16*var(--u))}
+html.m #sortp .opt{min-width:0}
+html.m #detail{overflow-y:auto;-webkit-overflow-scrolling:touch}
+html.m #dbg{position:fixed}
+html.m #dwrap{position:relative;inset:auto;display:block;padding:calc(50*var(--u)) calc(16*var(--u)) calc(30*var(--u))}
+html.m #dposter{height:auto;max-width:100%;align-items:center;margin-bottom:calc(18*var(--u))}
+html.m #dposter img{max-height:55vh}
+html.m #dtext{overflow:visible;padding:0}
+html.m #dtitle{font-size:calc(28*var(--u))}
+html.m #dsub,html.m #dtag{font-size:calc(15*var(--u))}
+html.m #dplot,html.m .tracks{font-size:calc(15*var(--u))}
+html.m .flag{font-size:calc(13*var(--u))}
+html.m .stars{font-size:calc(18*var(--u))}
+html.m .grid{grid-template-columns:calc(120*var(--u)) minmax(0,1fr);font-size:calc(14*var(--u))}
+html.m #dclose{position:fixed;right:calc(8*var(--u));top:calc(4*var(--u));font-size:calc(40*var(--u));padding:calc(4*var(--u)) calc(12*var(--u));background:rgba(0,0,0,.5);border-radius:50%;line-height:1}
+html.m #table{padding:calc(12*var(--u))}
+html.m #tbar{font-size:calc(15*var(--u))}
+html.m #tbar h2{font-size:calc(22*var(--u));flex:1 1 100%}
+html.m #tbar input,html.m #tbar select{font-size:16px;max-width:none}
+html.m #tbar input{flex:1 1 100%;width:auto}
+html.m #tt{font-size:max(13px,calc(15*var(--u)))}
 </style>
 </head>
 <body>
@@ -182,6 +225,14 @@ let query = '';
 let list = [];
 let pos = 0;
 const cards = new Map();
+// phone or any portrait screen (also Chrome "desktop site" on a phone): scrolling grid instead of the carousel
+const MQ = window.matchMedia('(orientation: portrait), (max-height: 560px)');
+let mobile = false, gridList = null;
+function setMode() {
+  mobile = MQ.matches;
+  document.documentElement.classList.toggle('m', mobile);
+}
+setMode();
 
 function hms(s) {
   s = Math.round(s || 0); if (!s) return '';
@@ -214,7 +265,7 @@ function rebuild(keepId) {
 function drawHeader() {
   $('secicon').innerHTML = '<path d="' + ICONS.musicvideo + '"/>';
   const day = (A.meta.created || '').split(' ')[0];
-  const name = 'Database musicale Mancini Alessandro' + (day ? ' al: ' + day : '');
+  const name = 'Database musicale' + (day ? ' al: ' + day : '');
   $('secname').textContent = name;
   $('subline').innerHTML = (fsel.length ? esc(fsel.join(' + ')) + ' &bull; ' : '') + '<b>' + list.length + '</b>' + (list.length !== A.items.length ? ' di ' + A.items.length : '') +
     ' elementi &bull; ordina per: ' + sortKeys.map(k => SORTS[k].name).join(' &rsaquo; ') +
@@ -244,7 +295,20 @@ function makeCard(it) {
   $('row').appendChild(d);
   return d;
 }
+function renderGrid() {
+  if (gridList === list) return;
+  gridList = list;
+  setBg('');
+  $('row').innerHTML = list.map((it, i) => {
+    const pr = profiles(it);
+    return '<div class="mcell" data-i="' + i + '"><div class="card" style="aspect-ratio:' + (ratioOf(it) === 1 ? '1 / 1' : '2 / 3') + '">' +
+      (it.poster ? '<img loading="lazy" src="' + esc(it.poster) + '" alt="">' : '<div class="ph">' + esc(it.fulltitle || it.title) + '</div>') +
+      (pr.length ? '<div class="badge"><i>' + esc(pr.join(' ')) + '</i></div>' : '') + '</div>' +
+      '<div class="cap">' + (it.artist && it.sec !== 'movie' && it.sec !== 'documentary' ? '<b>' + esc(it.artist) + '</b>' : '') + esc(it.title) + '</div></div>';
+  }).join('');
+}
 function render() {
+  if (mobile) { renderGrid(); return; }
   const g = geometry();
   const W = window.innerWidth;
   const want = new Set();
@@ -586,11 +650,32 @@ function jumpTo(ch) {   // like Kodi: a letter jumps to the first item starting 
 }
 let wheelLock = 0;
 document.addEventListener('wheel', e => {
-  if ($('detail').style.display === 'block' || tableOpen() || $('filters').contains(e.target) || $('sortp').contains(e.target)) return;
+  if (mobile || $('detail').style.display === 'block' || tableOpen() || $('filters').contains(e.target) || $('sortp').contains(e.target)) return;
   const now = Date.now(); if (now - wheelLock < 90) return; wheelLock = now;
   move((e.deltaY || e.deltaX) > 0 ? 1 : -1);
 }, {passive: true});
-window.addEventListener('resize', () => { for (const c of cards.values()) c.remove(); cards.clear(); render(); });
+window.addEventListener('resize', () => {
+  const was = mobile;
+  setMode();
+  if (mobile && was) return;   // phone: the grid reflows by itself (also when the address bar hides)
+  for (const c of cards.values()) c.remove();
+  cards.clear();
+  gridList = null;
+  $('row').innerHTML = '';
+  render();
+});
+$('row').addEventListener('click', e => {
+  if (!mobile) return;
+  const c = e.target.closest('.mcell');
+  if (c) { pos = +c.dataset.i; save('pos', list[pos] && list[pos].id); openDetail(list[pos]); }
+});
+$('row').addEventListener('error', e => {
+  const img = e.target;
+  if (!mobile || img.tagName !== 'IMG') return;
+  const c = img.closest('.mcell'); const it = c && list[+c.dataset.i];
+  img.insertAdjacentHTML('afterend', '<div class="ph">' + esc(it ? it.fulltitle || it.title : '') + '</div>');
+  img.remove();
+}, true);
 
 $('foot').innerHTML = 'Copyright <a href="https://www.instagram.com/alexmancinifoto/" target="_blank">@Alexmancinifoto</a>';
 $('bg2').style.opacity = '0';
